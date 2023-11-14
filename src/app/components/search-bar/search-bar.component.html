@@ -1,0 +1,16 @@
+<div
+  class="flex h-full w-full flex-col items-center justify-center text-center"
+>
+  <form (ngSubmit)="onSearch()">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter city name</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchTerm"
+        placeholder="City name"
+        required
+      />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Search</button>
+  </form>
+</div>
