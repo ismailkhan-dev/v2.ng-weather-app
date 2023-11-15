@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { WeatherService } from '../../services/weather.service';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-search-bar',
