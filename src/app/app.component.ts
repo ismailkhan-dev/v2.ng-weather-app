@@ -8,7 +8,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
   standalone: true,
   imports: [CommonModule, RouterOutlet, SearchBarComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'v2.ng-weather-app';
