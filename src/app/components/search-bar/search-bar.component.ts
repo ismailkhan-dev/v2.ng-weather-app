@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { WeatherService } from '../../services/weather/weather.service';
 import { GeocodingService } from '../../services/geocoding/geocoding.service';
 import { FormValidatorDirective } from '../../directives/form-validator.directive';
+import { WeatherStateService } from '../../services/weather-state/weather-state.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -28,6 +29,7 @@ export class SearchBarComponent {
   constructor(
     private weatherService: WeatherService,
     private geocodingService: GeocodingService,
+    private weatherStateService: WeatherStateService,
     private changeDetectorRef: ChangeDetectorRef,
     private _snackBar: MatSnackBar,
   ) {}
@@ -103,12 +105,17 @@ export class SearchBarComponent {
           return;
         }
 
-        console.log('Weather data: ', weatherData);
-        this._snackBar.open('Weather data fetched successfully ✅', 'Close', {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
+        // send weather data to shared state service
+        if (weatherData) {
+          console.log('Weather data: ', weatherData);
+          this.weatherStateService.setWeatherData(weatherData);
+
+          this._snackBar.open('Weather data fetched successfully ✅', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+        }
 
         // TODO: Handle the weather data here, from another function.
       },
