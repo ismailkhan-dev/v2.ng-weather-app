@@ -5,10 +5,12 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          Current Weather in {{ weatherData.timezone }}
+          Current Weather in {{ formattedAddress }}
         </mat-card-title>
         <mat-card-subtitle>
-          As of {{ weatherData.current.dt | date: "medium" }}
+          As of {{ weatherData.current.dt | date: "short" }} ({{
+            weatherData.timezone
+          }})
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
@@ -33,6 +35,16 @@
           } @empty {
             <span>No current weather available</span>
           }
+        </div>
+        <div>
+          <p>
+            <strong>Sunrise: </strong
+            >{{ weatherData.current.sunrise | date: "short" }}
+          </p>
+          <p>
+            <strong>Sunset: </strong
+            >{{ weatherData.current.sunset | date: "short" }}
+          </p>
         </div>
       </mat-card-content>
     </mat-card>

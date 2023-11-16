@@ -31,16 +31,17 @@ export class GeocodingService {
       return of(cachedResponse);
     }
 
-    console.log('Fetched new GEO data: ', url);
-
     return new Observable((observer) => {
       this.http.get(url).subscribe({
         next: (data) => {
+          console.log('Received geocoding data', data);
+
           if (!data) {
             console.error('Received invalid geocoding data');
             observer.error('Invalid geocoding data');
             return;
           }
+
           this.cache.set(cacheKey, data);
           observer.next(data);
         },

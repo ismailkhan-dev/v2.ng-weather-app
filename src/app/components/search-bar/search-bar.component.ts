@@ -8,6 +8,7 @@ import { WeatherService } from '../../services/weather/weather.service';
 import { GeocodingService } from '../../services/geocoding/geocoding.service';
 import { FormValidatorDirective } from '../../directives/form-validator.directive';
 import { WeatherStateService } from '../../services/weather-state/weather-state.service';
+import { GeocodingStateService } from '../../services/geocoding-state/geocoding-state.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -30,6 +31,7 @@ export class SearchBarComponent {
     private weatherService: WeatherService,
     private geocodingService: GeocodingService,
     private weatherStateService: WeatherStateService,
+    private geocodingStateService: GeocodingStateService,
     private changeDetectorRef: ChangeDetectorRef,
     private _snackBar: MatSnackBar,
   ) {}
@@ -39,12 +41,14 @@ export class SearchBarComponent {
     this.changeDetectorRef.detectChanges();
   }
 
+  // Search function for input
   onSearch(): void {
     if (!this.searchTerm.trim()) {
       console.error('Search term is empty or only whitespace');
       return;
     }
 
+    // Call geocoding service
     this.geocodingService.getCoordinates(this.searchTerm).subscribe({
       next: (geocodingResponse) => {
         if (
@@ -70,13 +74,22 @@ export class SearchBarComponent {
 
         if (geocodingResponse.results && geocodingResponse.results.length > 0) {
           const location = geocodingResponse.results[0].geometry.location;
+          const formattedAddress =
+            geocodingResponse.results[0].formatted_address;
 
           if (!location || location.lat == null || location.lng == null) {
             console.error('Invalid location data received.');
             return;
           }
 
-          console.log('Geocoding lat/lng results: ', location);
+          // Set formatted address to shared state service
+          this.geocodingStateService.setFormattedAddress(formattedAddress);
+
+          // Set this formatted address to the search term in input UI.
+          this.searchTerm = formattedAddress;
+          this.changeDetectorRef.detectChanges();
+
+          // console.log('Geocoding lat/lng results: ', location);
 
           this.fetchWeatherData(location.lat, location.lng);
         } else {
@@ -92,6 +105,7 @@ export class SearchBarComponent {
     });
   }
 
+  // Call fetch weather service
   private fetchWeatherData(lat: number, lng: number): void {
     if (typeof lat !== 'number' || typeof lng !== 'number') {
       console.error('Invalid latitude or longitude values');

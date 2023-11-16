@@ -34,6 +34,8 @@ export class FormValidatorDirective {
     }
 
     const char = event.key;
+    if (!char) return;
+
     if (!char.match(this.regex)) {
       event.preventDefault();
       setTimeout(() => this.invalidCharEntered.emit(true), 0);

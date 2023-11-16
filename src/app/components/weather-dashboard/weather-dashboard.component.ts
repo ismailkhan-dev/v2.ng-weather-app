@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WeatherStateService } from '../../services/weather-state/weather-state.service';
+import { GeocodingStateService } from '../../services/geocoding-state/geocoding-state.service';
 import { MatCardModule } from '@angular/material/card';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-weather-dashboard',
@@ -10,14 +12,32 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './weather-dashboard.component.html',
   styleUrl: './weather-dashboard.component.css',
 })
-export class WeatherDashboardComponent implements OnInit {
+export class WeatherDashboardComponent implements OnInit, OnDestroy {
   weatherData: any;
+  formattedAddress: string = '';
 
-  constructor(private weatherStateService: WeatherStateService) {}
+  private subscriptions = new Subscription();
+
+  constructor(
+    private weatherStateService: WeatherStateService,
+    private geocodingStateService: GeocodingStateService,
+  ) {}
 
   ngOnInit(): void {
-    this.weatherStateService.getWeatherData().subscribe((data) => {
-      this.weatherData = data;
-    });
+    this.subscriptions.add(
+      this.weatherStateService.getWeatherData().subscribe((data) => {
+        this.weatherData = data;
+      }),
+    );
+
+    this.subscriptions.add(
+      this.geocodingStateService.getFormattedAddress().subscribe((address) => {
+        this.formattedAddress = address;
+      }),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
