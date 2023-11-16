@@ -1,25 +1,41 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { WeatherService } from '../../services/weather/weather.service';
 import { GeocodingService } from '../../services/geocoding/geocoding.service';
+import { FormValidatorDirective } from '../../directives/form-validator.directive';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    FormValidatorDirective,
+  ],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent {
   searchTerm: string = '';
+  isInvalidInput: boolean = false;
 
   constructor(
     private weatherService: WeatherService,
     private geocodingService: GeocodingService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private _snackBar: MatSnackBar,
   ) {}
+
+  handleInvalidInput(isInvalid: boolean): void {
+    this.isInvalidInput = isInvalid;
+    this.changeDetectorRef.detectChanges();
+  }
 
   onSearch(): void {
     if (!this.searchTerm.trim()) {
@@ -36,6 +52,16 @@ export class SearchBarComponent {
         ) {
           console.error(
             'No results found or invalid response for this location',
+          );
+
+          this._snackBar.open(
+            'Weather data fetched unsuccessfully ❌',
+            'Close',
+            {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            },
           );
           return;
         }
@@ -78,6 +104,11 @@ export class SearchBarComponent {
         }
 
         console.log('Weather data: ', weatherData);
+        this._snackBar.open('Weather data fetched successfully ✅', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
 
         // TODO: Handle the weather data here, from another function.
       },

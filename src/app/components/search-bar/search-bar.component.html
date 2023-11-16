@@ -3,7 +3,7 @@
 >
   <form (ngSubmit)="onSearch()" #searchForm="ngForm">
     <mat-form-field appearance="fill">
-      <mat-label>Enter city name</mat-label>
+      <mat-label>Enter city</mat-label>
       <input
         matInput
         [(ngModel)]="searchTerm"
@@ -11,7 +11,10 @@
         name="cityName"
         required
         type="text"
+        appFormValidator
+        (invalidCharEntered)="handleInvalidInput($event)"
       />
+      <mat-error *ngIf="isInvalidInput">Invalid character entered!</mat-error>
     </mat-form-field>
     <button
       mat-raised-button
