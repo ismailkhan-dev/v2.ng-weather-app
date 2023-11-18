@@ -1,10 +1,20 @@
 @if (weatherData) {
-  <div class="mx-auto mt-5 max-w-xl rounded-lg bg-gray-100 p-6 shadow-md">
+  <div class="mx-auto mt-5 max-w-xl rounded-lg bg-gray-100 p-6">
     <h2 class="text-center text-2xl font-semibold text-gray-800">
       8-Day Forecast
     </h2>
 
     <table mat-table [dataSource]="dataSource">
+      <!-- Expanded Indicator Column -->
+      <ng-container matColumnDef="expandedIndicator">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row" class="text-right">
+          <mat-icon aria-hidden="false" aria-label="expansion icon">
+            {{ expandedElement === row ? "expand_less" : "expand_more" }}
+          </mat-icon>
+        </td>
+      </ng-container>
+
       <!-- Date Column -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Date</th>
@@ -35,7 +45,108 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <ng-container *matRowDef="let row; columns: displayedColumns">
+        <!-- Regular Row -->
+        <tr
+          mat-row
+          (click)="expandedElement = expandedElement === row ? null : row"
+          class="cursor-pointer hover:bg-gray-200"
+        ></tr>
+
+        <!-- Expansion Panel Row -->
+        <tr *ngIf="expandedElement === row" class="mat-elevation-z1">
+          <td [attr.colspan]="displayedColumns.length">
+            <mat-expansion-panel
+              [expanded]="true"
+              (closed)="expandedElement = null"
+            >
+              <!-- Detailed daily weather data -->
+              <div class="space-y-2 p-4">
+                <div>
+                  <strong>Temperature:</strong>
+                  <table class="min-w-full">
+                    <tbody>
+                      <tr>
+                        <td>Day</td>
+                        <td>{{ row.temp.day }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Min</td>
+                        <td>{{ row.temp.min }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Max</td>
+                        <td>{{ row.temp.max }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Night</td>
+                        <td>{{ row.temp.night }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Eve</td>
+                        <td>{{ row.temp.eve }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Morn</td>
+                        <td>{{ row.temp.morn }}°</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div>
+                  <strong>Feels Like:</strong>
+                  <table class="min-w-full">
+                    <tbody>
+                      <tr>
+                        <td>Day</td>
+                        <td>{{ row.feels_like.day }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Night</td>
+                        <td>{{ row.feels_like.night }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Eve</td>
+                        <td>{{ row.feels_like.eve }}°</td>
+                      </tr>
+                      <tr>
+                        <td>Morn</td>
+                        <td>{{ row.feels_like.morn }}°</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div>
+                  <strong>Sunrise:</strong>
+                  {{ row.sunrise * 1000 | date: "HH:mm:ss" : "EST" }}
+                </div>
+                <div>
+                  <strong>Sunset:</strong>
+                  {{ row.sunset * 1000 | date: "HH:mm:ss" : "EST" }}
+                </div>
+                <div>
+                  <strong>Moonrise:</strong>
+                  {{ row.moonrise * 1000 | date: "HH:mm:ss" : "EST" }}
+                </div>
+                <div>
+                  <strong>Moonset:</strong>
+                  {{ row.moonset * 1000 | date: "HH:mm:ss" : "EST" }}
+                </div>
+                <div><strong>Moon Phase:</strong> {{ row.moon_phase }}</div>
+                <div><strong>Pressure:</strong> {{ row.pressure }} hPa</div>
+                <div><strong>Humidity:</strong> {{ row.humidity }}%</div>
+                <div><strong>Dew Point:</strong> {{ row.dew_point }}</div>
+                <div><strong>Wind Speed:</strong> {{ row.wind_speed }} m/s</div>
+                <div><strong>Wind Direction:</strong> {{ row.wind_deg }}°</div>
+                <div><strong>Wind Gust:</strong> {{ row.wind_gust }} m/s</div>
+              </div>
+            </mat-expansion-panel>
+          </td>
+        </tr>
+      </ng-container>
     </table>
   </div>
 } @else {

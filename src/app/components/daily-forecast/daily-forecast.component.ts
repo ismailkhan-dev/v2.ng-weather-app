@@ -2,13 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WeatherStateService } from '../../services/weather-state/weather-state.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 import { WeatherIconService } from '../../services/weather-icon/weather-icon.service';
 
 @Component({
   selector: 'app-daily-forecast',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
+  imports: [CommonModule, MatTableModule, MatExpansionModule, MatIconModule],
   templateUrl: './daily-forecast.component.html',
   styleUrl: './daily-forecast.component.css',
 })
@@ -16,7 +18,14 @@ export class DailyForecastComponent implements OnInit, OnDestroy {
   weatherData: any;
   dailyForecast: any[] = [];
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['date', 'temperature', 'description'];
+  displayedColumns: string[] = [
+    'date',
+    'temperature',
+    'description',
+    'expandedIndicator',
+  ];
+  clickedRows = new Set();
+  expandedElement: any | null;
 
   private subscriptions = new Subscription();
 
@@ -24,6 +33,10 @@ export class DailyForecastComponent implements OnInit, OnDestroy {
     private weatherStateService: WeatherStateService,
     private weatherIconService: WeatherIconService,
   ) {}
+
+  onRowClicked(row: any): void {
+    this.clickedRows.add(row);
+  }
 
   getWeatherIconUrl(iconCode: string): string {
     return this.weatherIconService.getIconUrl(iconCode);
