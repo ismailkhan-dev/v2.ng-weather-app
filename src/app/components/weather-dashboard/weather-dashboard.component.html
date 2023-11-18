@@ -1,19 +1,22 @@
-<div class="weather-dashboard">
-  <h2>Weather Dashboard</h2>
+<div class="mx-auto max-w-xl rounded-lg bg-gray-100 p-6 shadow-md">
+  <h2 class="text-center text-2xl font-semibold text-gray-800">
+    Weather Dashboard
+  </h2>
 
   @if (weatherData) {
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>
+    <mat-card class="rounded-lg bg-white p-4 shadow">
+      <mat-card-header class="border-b pb-3">
+        <mat-card-title class="text-lg font-semibold text-gray-700">
           Current Weather in {{ formattedAddress }}
         </mat-card-title>
-        <mat-card-subtitle>
-          As of {{ weatherData.current.dt | date: "short" }} ({{
+        <mat-card-subtitle class="text-sm text-gray-600">
+          As of
+          {{ weatherData.current.dt * 1000 | date: "HH:mm:ss" : "EST" }} ({{
             weatherData.timezone
           }})
         </mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content>
+      <mat-card-content class="mt-4 text-gray-700">
         <p>
           <strong>Temperature:</strong>
           {{ weatherData.current.temp | number }}°F
@@ -28,28 +31,33 @@
         <p>
           <strong>Wind Speed:</strong> {{ weatherData.current.wind_speed }} m/s
         </p>
-        <div>
-          <strong>Weather:</strong>
+        <div class="mr-2 mt-3 flex items-center text-gray-700">
+          <strong>Weather: </strong>
           @for (weather of weatherData.current.weather; track weather.main) {
             <span> {{ weather.main }} ({{ weather.description }}) </span>
+            <img
+              [src]="getWeatherIconUrl(weather.icon)"
+              alt="{{ weather.id }}"
+              class="inline-block h-12 w-12"
+            />
           } @empty {
             <span>No current weather available</span>
           }
         </div>
-        <div>
+        <div class="mt-4 text-gray-700">
           <p>
             <strong>Sunrise: </strong
-            >{{ weatherData.current.sunrise | date: "short" }}
+            >{{ weatherData.current.sunrise * 1000 | date: "HH:mm:ss" : "EST" }}
           </p>
           <p>
             <strong>Sunset: </strong
-            >{{ weatherData.current.sunset | date: "short" }}
+            >{{ weatherData.current.sunset * 1000 | date: "HH:mm:ss" : "EST" }}
           </p>
         </div>
       </mat-card-content>
     </mat-card>
   } @else {
-    <p>
+    <p class="mt-4 text-center text-gray-700">
       Search for a city name in the search bar above to view its current weather
       data.
     </p>
