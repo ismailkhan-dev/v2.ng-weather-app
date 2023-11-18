@@ -11,9 +11,10 @@
         </mat-card-title>
         <mat-card-subtitle class="text-sm text-gray-600">
           As of
-          {{ weatherData.current.dt * 1000 | date: "HH:mm:ss" : "EST" }} ({{
-            weatherData.timezone
-          }})
+          {{
+            weatherData.current.dt * 1000 | date: "MMM dd, HH:mm:ss" : "EST"
+          }}
+          ({{ weatherData.timezone }})
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="mt-4 text-gray-700">
