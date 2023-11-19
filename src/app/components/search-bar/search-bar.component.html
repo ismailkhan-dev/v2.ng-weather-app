@@ -1,8 +1,6 @@
-<div
-  class="flex h-full w-full flex-col items-center justify-center text-center"
->
-  <form (ngSubmit)="onSearch()" #searchForm="ngForm">
-    <mat-form-field appearance="fill">
+<div class="w-full">
+  <form (ngSubmit)="onSearch()" #searchForm="ngForm" class="flex w-full">
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>Enter city</mat-label>
       <input
         matInput
@@ -10,19 +8,18 @@
         placeholder="City name"
         name="cityName"
         required
-        type="text"
+        type="search"
         appFormValidator
         (invalidCharEntered)="handleInvalidInput($event)"
       />
+      <button
+        matSuffix
+        class="mr-4 rounded-full bg-blue-400 p-2 hover:cursor-pointer hover:bg-blue-800 hover:text-white"
+        aria-label="Search"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
       <mat-error *ngIf="isInvalidInput">Invalid character entered!</mat-error>
     </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="!searchForm.valid"
-    >
-      Search
-    </button>
   </form>
 </div>

@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { WeatherDashboardComponent } from './components/weather-dashboard/weather-dashboard.component';
 import { DailyForecastComponent } from './components/daily-forecast/daily-forecast.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { DailyForecastComponent } from './components/daily-forecast/daily-foreca
   imports: [
     CommonModule,
     RouterOutlet,
-    SearchBarComponent,
+    HeaderComponent,
     WeatherDashboardComponent,
     DailyForecastComponent,
   ],
