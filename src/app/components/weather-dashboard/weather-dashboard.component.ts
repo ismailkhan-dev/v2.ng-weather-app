@@ -14,7 +14,7 @@ import { WeatherIconService } from '../../services/weather-icon/weather-icon.ser
   styleUrl: './weather-dashboard.component.css',
 })
 export class WeatherDashboardComponent implements OnInit, OnDestroy {
-  weatherData: any;
+  weatherData: any | null;
   formattedAddress: string = '';
 
   private subscriptions = new Subscription();

@@ -1,17 +1,19 @@
 <div
-  class="bg-weather-pattern relative flex h-72 flex-col items-center justify-center bg-cover bg-center text-black"
+  class="relative flex h-44 flex-col items-center justify-center bg-weather-pattern bg-cover bg-center text-black"
   style="background-size: 2160px 300px"
 >
   <div class="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
 
-  <div class="z-10 mt-10 flex w-[36rem] flex-col items-center justify-center">
-    <div class="flex flex-row items-center justify-center">
-      <img src="/assets/icon.svg" alt="weather icon" class="h-24 w-24" />
-      <h1 class="text-5xl font-bold">Ng Weather App</h1>
+  <div class="z-10 mt-2 flex w-[55rem] flex-row items-center justify-center">
+    <div class="flex w-full flex-col items-center justify-center">
+      <div class="flex flex-row items-center">
+        <img src="/assets/icon.svg" alt="weather icon" class="h-16 w-16" />
+        <h1 class="text-3xl font-bold">Ng Weather</h1>
+      </div>
+      <p class="text-md mb-4 mt-2 text-center">
+        Check your local weather in a fast and elegant way
+      </p>
     </div>
-    <p class="mb-4 mt-2 text-xl">
-      Check your local weather in a fast and elegant way
-    </p>
     <app-search-bar class="w-full"></app-search-bar>
   </div>
 </div>
