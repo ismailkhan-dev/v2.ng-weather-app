@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { WeatherDashboardComponent } from './components/weather-dashboard/weather-dashboard.component';
 import { DailyForecastComponent } from './components/daily-forecast/daily-forecast.component';
 import { HeaderComponent } from './components/header/header.component';
+import { WeatherMapComponent } from './components/weather-map/weather-map.component';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,7 @@ import { HeaderComponent } from './components/header/header.component';
     HeaderComponent,
     WeatherDashboardComponent,
     DailyForecastComponent,
+    WeatherMapComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],

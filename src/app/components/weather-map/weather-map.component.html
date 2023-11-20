@@ -1,0 +1,11 @@
+<div class="mx-auto my-4 max-w-4xl rounded-lg bg-gray-100 p-6 shadow-md">
+  <h2 class="text-center text-2xl font-semibold text-gray-800">Weather Map</h2>
+
+  @if (isMapReady) {
+    <div class="flex flex-col items-center justify-center">
+      @if (mapLoaded | async) {
+        <google-map [center]="center" [options]="mapOptions"></google-map>
+      }
+    </div>
+  }
+</div>
