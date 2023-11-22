@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { BrowserGeolocationService } from '../../services/browser-geolocation/browser-geolocation.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ClockComponent } from '../clock/clock.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent],
+  imports: [CommonModule, SearchBarComponent, ClockComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
+  temperatureUnit: string = 'celsius';
+
   constructor(
     private browserGeolocationService: BrowserGeolocationService,
     private _snackBar: MatSnackBar,
@@ -38,5 +41,11 @@ export class HeaderComponent {
         this.showSnackBar('Enable location permissions in your browser!');
       },
     });
+  }
+
+  setTemperatureUnit(unit: string) {
+    this.temperatureUnit = unit;
+    console.log('Selected Unit:', this.temperatureUnit);
+    // Additional logic to handle the change in temperature unit
   }
 }

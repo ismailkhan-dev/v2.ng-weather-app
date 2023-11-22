@@ -33,6 +33,7 @@ export class WeatherDashboardComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.weatherStateService.getWeatherData().subscribe((data) => {
         this.weatherData = data;
+        console.log('weatherData', this.weatherData);
       }),
     );
 

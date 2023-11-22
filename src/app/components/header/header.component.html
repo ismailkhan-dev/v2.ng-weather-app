@@ -4,24 +4,52 @@
 >
   <div class="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
 
-  <div class="z-10 mt-2 flex w-[55rem] flex-row items-center justify-center">
-    <div class="flex w-full flex-col items-center justify-center">
+  <div class="z-10 mt-2 flex w-[55rem] flex-row items-center justify-around">
+    <div class="flex w-full flex-col">
       <div class="flex flex-row items-center">
         <img src="/assets/icon.svg" alt="weather icon" class="h-16 w-16" />
-        <h1 class="text-3xl font-bold">Ng Weather</h1>
+        <h1 class="text-3xl font-bold uppercase">Ng Weather</h1>
       </div>
-      <p class="text-md mb-4 mt-2 text-center">
-        Check your local weather in a fast and elegant way
+      <p class="text-md my-1 italic">
+        Check your local weather in a fast and elegant way.
       </p>
+
+      <app-clock class="font-semibold"></app-clock>
     </div>
     <div class="w-full">
       <app-search-bar class="w-full"></app-search-bar>
-      <button
-        class="bg-blue-400 p-2 text-xs hover:bg-blue-800 hover:text-white"
-        (click)="handleGetWeatherBtn()"
-      >
-        Get Location?
-      </button>
+      <div class="flex flex-row gap-2">
+        <button
+          class="h-8 rounded-md bg-gray-200 px-4 py-2 text-xs hover:bg-blue-400 hover:text-white"
+          (click)="handleGetWeatherBtn()"
+        >
+          Get Location?
+        </button>
+        <div class="h-8 text-xs">
+          <button
+            [ngClass]="
+              temperatureUnit === 'celsius'
+                ? 'bg-blue-400 text-white'
+                : 'bg-gray-200 text-black'
+            "
+            class="rounded-l-md px-4 py-2 focus:outline-none"
+            (click)="setTemperatureUnit('celsius')"
+          >
+            °C
+          </button>
+          <button
+            [ngClass]="
+              temperatureUnit === 'fahrenheit'
+                ? 'bg-blue-400 text-white'
+                : 'bg-gray-200 text-black'
+            "
+            class="rounded-r-md px-4 py-2 focus:outline-none"
+            (click)="setTemperatureUnit('fahrenheit')"
+          >
+            °F
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

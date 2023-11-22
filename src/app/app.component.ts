@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getWeatherData();
+    // this.getWeatherData();
   }
 
   private getWeatherData() {
