@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { WeatherDashboardComponent } from './components/weather-dashboard/weather-dashboard.component';
-import { DailyForecastComponent } from './components/daily-forecast/daily-forecast.component';
+import { WeeklyForecastComponent } from './components/weekly-forecast/weekly-forecast.component';
 import { HeaderComponent } from './components/header/header.component';
 import { WeatherMapComponent } from './components/weather-map/weather-map.component';
 import { BrowserGeolocationService } from './services/browser-geolocation/browser-geolocation.service';
@@ -11,6 +11,10 @@ import { WeatherService } from './services/weather/weather.service';
 import { WeatherStateService } from './services/weather-state/weather-state.service';
 import { GeocodingStateService } from './services/geocoding-state/geocoding-state.service';
 import { GeocodingService } from './services/geocoding/geocoding.service';
+import { TodayForecastComponent } from './components/today-forecast/today-forecast.component';
+import { TodayInfoComponent } from './components/today-info/today-info.component';
+import { HourlyForecastComponent } from './components/hourly-forecast/hourly-forecast.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +23,13 @@ import { GeocodingService } from './services/geocoding/geocoding.service';
     CommonModule,
     RouterOutlet,
     HeaderComponent,
+    FooterComponent,
     WeatherDashboardComponent,
-    DailyForecastComponent,
+    WeeklyForecastComponent,
     WeatherMapComponent,
+    TodayForecastComponent,
+    TodayInfoComponent,
+    HourlyForecastComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],

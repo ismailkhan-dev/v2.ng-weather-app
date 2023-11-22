@@ -8,13 +8,13 @@ import { Subscription } from 'rxjs';
 import { WeatherIconService } from '../../services/weather-icon/weather-icon.service';
 
 @Component({
-  selector: 'app-daily-forecast',
+  selector: 'app-weekly-forecast',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatExpansionModule, MatIconModule],
-  templateUrl: './daily-forecast.component.html',
-  styleUrl: './daily-forecast.component.css',
+  templateUrl: './weekly-forecast.component.html',
+  styleUrl: './weekly-forecast.component.css',
 })
-export class DailyForecastComponent implements OnInit, OnDestroy {
+export class WeeklyForecastComponent implements OnInit, OnDestroy {
   weatherData: any;
   dailyForecast: any[] = [];
   dataSource = new MatTableDataSource<any>();
