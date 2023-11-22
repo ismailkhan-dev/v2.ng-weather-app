@@ -53,4 +53,27 @@ export class GeocodingService {
       });
     });
   }
+
+  reverseGeocodingForAddress(lat: number, long: number) {
+    const url = `${this.API_URL}?latlng=${lat},${long}&key=${this.API_KEY}`;
+
+    return new Observable((observer) => {
+      this.http.get(url).subscribe({
+        next: (data) => {
+          if (!data) {
+            console.error('Received invalid geocoding data');
+            observer.error('Invalid geocoding data');
+            return;
+          }
+
+          observer.next(data);
+        },
+        error: (error) => {
+          console.error('Error fetching geocoding data: ', error);
+          observer.error(error);
+        },
+        complete: () => observer.complete(),
+      });
+    });
+  }
 }

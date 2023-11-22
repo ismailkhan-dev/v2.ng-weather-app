@@ -8,6 +8,9 @@ import { WeatherMapComponent } from './components/weather-map/weather-map.compon
 import { BrowserGeolocationService } from './services/browser-geolocation/browser-geolocation.service';
 import { IpGeolocationService } from './services/ip-geolocation/ip-geolocation.service';
 import { WeatherService } from './services/weather/weather.service';
+import { WeatherStateService } from './services/weather-state/weather-state.service';
+import { GeocodingStateService } from './services/geocoding-state/geocoding-state.service';
+import { GeocodingService } from './services/geocoding/geocoding.service';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +32,10 @@ export class AppComponent implements OnInit {
   constructor(
     private browserGeolocationService: BrowserGeolocationService,
     private ipGeolocationService: IpGeolocationService,
+    private geocodingService: GeocodingService,
+    private geocodingStateService: GeocodingStateService,
     private weatherService: WeatherService,
+    private weatherStateService: WeatherStateService,
   ) {}
 
   ngOnInit() {
@@ -37,14 +43,27 @@ export class AppComponent implements OnInit {
   }
 
   private getWeatherData() {
-    this.browserGeolocationService.getCurrentPosition().subscribe({
-      next: (position) => {
-        let browserCoords = {
-          lat: position.coords.latitude,
-          long: position.coords.longitude,
+    this.browserGeolocationService.getLocation().subscribe({
+      next: (obj) => {
+        let coords = {
+          lat: obj.coords.latitude,
+          long: obj.coords.longitude,
         };
-        console.log('Fetched coords from browser', browserCoords);
-        this.fetchWeather(browserCoords.lat, browserCoords.long);
+
+        this.geocodingService
+          .reverseGeocodingForAddress(coords.lat, coords.long)
+          .subscribe({
+            next: (data: any) => {
+              const formattedAddress = data.results[7].formatted_address;
+              this.geocodingStateService.setFormattedAddress(formattedAddress);
+            },
+            error: (data) => {
+              console.error('reverseGeocodingForAddress service error', data);
+            },
+          });
+
+        console.log('Fetched coords from browser', coords);
+        this.fetchWeather(coords.lat, coords.long);
       },
       error: (error) => {
         console.error('browserGeolocationService error:', error);
@@ -53,29 +72,40 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private fetchWeather(lat: number, long: number) {
-    this.weatherService.getWeatherData(lat, long).subscribe({
-      next: (weatherData) => {
-        console.log('Weather data', weatherData);
+  private getIpGeolocation() {
+    this.ipGeolocationService.getLocation().subscribe({
+      next: (obj) => {
+        let location = {
+          city: obj.city,
+          region: obj.region_code,
+          country: obj.country_name,
+        };
+
+        let formattedAddress = `${location.city}, ${location.region}, ${location.country}`;
+        // console.log('formattedAddress', formattedAddress);
+        this.geocodingStateService.setFormattedAddress(formattedAddress);
+
+        let coords = {
+          lat: obj.latitude,
+          long: obj.longitude,
+        };
+        // console.log('Fetched coords from ip service:', coords);
+        this.fetchWeather(coords.lat, coords.long);
       },
-      error: (weatherError) => {
-        console.error('Weather service error', weatherError);
+      error: (error) => {
+        console.error('Geolocation error:', error);
       },
     });
   }
 
-  private getIpGeolocation() {
-    this.ipGeolocationService.getApproximateLocation().subscribe({
-      next: (position) => {
-        let ipCoords = {
-          lat: position.latitude,
-          long: position.longitude,
-        };
-        console.log('Fetched coords from ip service:', ipCoords);
-        this.fetchWeather(ipCoords.lat, ipCoords.long);
+  private fetchWeather(lat: number, long: number) {
+    this.weatherService.getWeatherData(lat, long).subscribe({
+      next: (weatherData) => {
+        // console.log('Weather data', weatherData);
+        this.weatherStateService.setWeatherData(weatherData);
       },
-      error: (error) => {
-        console.error('Geolocation error:', error);
+      error: (weatherError) => {
+        console.error('Weather service error', weatherError);
       },
     });
   }

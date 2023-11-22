@@ -19,7 +19,7 @@ export class WeatherService {
       return throwError(() => new Error('Invalid lat and long values'));
     }
 
-    const url = `${this.API_URL}?lat=${lat}&lon=${long}&appid=${this.API_KEY}`;
+    const url = `${this.API_URL}?lat=${lat}&lon=${long}&units=metric&appid=${this.API_KEY}`;
     const cacheKey = `weather-data-${lat}-${long}`;
     const cachedResponse = this.cache.get(cacheKey);
 

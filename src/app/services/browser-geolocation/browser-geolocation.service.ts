@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 export class BrowserGeolocationService {
   constructor() {}
 
-  public getCurrentPosition(): Observable<GeolocationPosition> {
+  public getLocation(): Observable<GeolocationPosition> {
     return new Observable((observer) => {
       if (!navigator.geolocation) {
         observer.error(
@@ -19,11 +19,13 @@ export class BrowserGeolocationService {
       const options = {
         enableHighAccuracy: true,
         maximumAge: 30000,
-        timeout: 10000,
+        timeout: 1000,
       };
 
       const watchId = navigator.geolocation.watchPosition(
         (position) => {
+          console.log('browser geolocation', position);
+
           observer.next(position);
           observer.complete();
         },

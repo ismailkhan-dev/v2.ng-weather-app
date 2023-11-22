@@ -29,9 +29,9 @@ export class HeaderComponent {
 
   //TODO: update this function to trigger the browser to open the permission dialogbox
   handleGetWeatherBtn() {
-    this.browserGeolocationService.getCurrentPosition().subscribe({
+    this.browserGeolocationService.getLocation().subscribe({
       next: (position) => {
-        console.log('browser position', position);
+        // console.log('browser position', position);
       },
       error: (error) => {
         console.error('geolocation error', error);

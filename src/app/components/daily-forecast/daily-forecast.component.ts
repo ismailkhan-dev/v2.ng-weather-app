@@ -49,7 +49,7 @@ export class DailyForecastComponent implements OnInit, OnDestroy {
           this.weatherData = data;
           this.dailyForecast = data.daily;
           this.dataSource.data = this.dailyForecast;
-          console.log('dailyForecast', this.dailyForecast);
+          // console.log('dailyForecast', this.dailyForecast);
         } else {
           this.weatherData = null;
           this.dailyForecast = [];

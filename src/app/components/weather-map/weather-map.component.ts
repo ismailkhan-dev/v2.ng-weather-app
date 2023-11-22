@@ -69,7 +69,7 @@ export class WeatherMapComponent implements OnInit, OnDestroy {
             lng: data.lon,
           };
           this.isMapReady = true;
-          console.log('this.center', this.center);
+          // console.log('this.center', this.center);
         }
       }),
     );

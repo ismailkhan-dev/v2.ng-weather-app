@@ -10,7 +10,7 @@ export class IpGeolocationService {
 
   constructor(private http: HttpClient) {}
 
-  public getApproximateLocation(): Observable<any> {
+  public getLocation(): Observable<any> {
     return this.http.get(this.IP_API_URL);
   }
 }
