@@ -14,6 +14,14 @@
         Check your local weather in a fast and elegant way
       </p>
     </div>
-    <app-search-bar class="w-full"></app-search-bar>
+    <div class="w-full">
+      <app-search-bar class="w-full"></app-search-bar>
+      <button
+        class="bg-blue-400 p-2 text-xs hover:bg-blue-800 hover:text-white"
+        (click)="handleGetWeatherBtn()"
+      >
+        Get Location?
+      </button>
+    </div>
   </div>
 </div>

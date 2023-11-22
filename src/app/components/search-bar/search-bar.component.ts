@@ -10,6 +10,7 @@ import { GeocodingService } from '../../services/geocoding/geocoding.service';
 import { FormValidatorDirective } from '../../directives/form-validator.directive';
 import { WeatherStateService } from '../../services/weather-state/weather-state.service';
 import { GeocodingStateService } from '../../services/geocoding-state/geocoding-state.service';
+import { BrowserGeolocationService } from '../../services/browser-geolocation/browser-geolocation.service';
 
 @Component({
   selector: 'app-search-bar',

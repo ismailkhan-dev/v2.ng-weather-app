@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { BrowserGeolocationService } from '../../services/browser-geolocation/browser-geolocation.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-header',
@@ -9,4 +11,32 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  constructor(
+    private browserGeolocationService: BrowserGeolocationService,
+    private _snackBar: MatSnackBar,
+  ) {}
+
+  //TODO: refactor this into a shared component with the same in search-bar
+  showSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 2500,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: ['custom-snackbar'],
+    });
+  }
+
+  //TODO: update this function to trigger the browser to open the permission dialogbox
+  handleGetWeatherBtn() {
+    this.browserGeolocationService.getCurrentPosition().subscribe({
+      next: (position) => {
+        console.log('browser position', position);
+      },
+      error: (error) => {
+        console.error('geolocation error', error);
+        this.showSnackBar('Enable location permissions in your browser!');
+      },
+    });
+  }
+}

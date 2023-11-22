@@ -29,7 +29,7 @@ export class WeatherService {
       return of(cachedResponse);
     }
 
-    console.log('Fetched new WEATHER data: ', url);
+    // console.log('Fetched new WEATHER data: ', url);
 
     return new Observable((observer) => {
       return this.http.get(url).subscribe({
