@@ -81,7 +81,7 @@ export class SearchBarComponent {
           const formattedAddress =
             geocodingResponse.results[0].formatted_address;
 
-          console.log('geocoding location search bar', location);
+          // console.log('geocoding location search bar', location);
 
           if (!location || location.lat == null || location.lng == null) {
             console.error('Invalid location data received.');
@@ -127,7 +127,7 @@ export class SearchBarComponent {
 
         // send weather data to shared state service
         if (weatherData) {
-          console.log('Weather data: ', weatherData);
+          // console.log('Weather data: ', weatherData);
           this.weatherStateService.setWeatherData(weatherData);
 
           this.showSnackBar('Weather data fetched successfully ✅', 'Close');

@@ -2,4 +2,48 @@
   <h2 class="p-3 text-left text-2xl font-semibold text-gray-800">
     Weather Today in {{ formattedAddress }}
   </h2>
+
+  @if (weatherData) {
+    <div class="bg-white">
+      <h2 class="text-4xl text-red-500">Finish this!</h2>
+      <div class="flex flex-row items-center justify-between">
+        <!-- Feels like -->
+        <div class="flex flex-col p-6">
+          <span class="text-md">Feels like</span>
+          <span class="text-4xl">
+            {{ currentWeather.feels_like | number: "1.0-0" }}°C
+          </span>
+        </div>
+
+        <!-- Sunrise -->
+        <div class="flex flex-col gap-2 p-6">
+          <span
+            >Sunrise:
+            {{ dailyWeather.sunrise * 1000 | date: "HH:mm:ss" : "EST" }}</span
+          >
+          <span
+            >Sunset:
+            {{ dailyWeather.sunset * 1000 | date: "HH:mm:ss" : "EST" }}</span
+          >
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 gap-10 p-6 text-lg">
+        <div class="flex w-full flex-row justify-between">
+          <mat-icon>thermostat</mat-icon>
+          <div>High/Low</div>
+          <div>
+            {{ dailyWeather.temp.max | number: "1.0-0" }}°/{{
+              dailyWeather.temp.min | number: "1.0-0"
+            }}°
+          </div>
+        </div>
+        <div class="flex w-full flex-row justify-between">
+          <mat-icon>air</mat-icon>
+          <div>Wind</div>
+          <div>{{ dailyWeather.wind_speed }} km/h</div>
+        </div>
+      </div>
+    </div>
+  }
 </div>

@@ -34,7 +34,7 @@ export class GeocodingService {
     return new Observable((observer) => {
       this.http.get(url).subscribe({
         next: (data) => {
-          console.log('Received geocoding data', data);
+          // console.log('Received geocoding data', data);
 
           if (!data) {
             console.error('Received invalid geocoding data');
