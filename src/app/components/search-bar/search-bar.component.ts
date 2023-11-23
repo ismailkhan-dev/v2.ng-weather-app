@@ -81,6 +81,8 @@ export class SearchBarComponent {
           const formattedAddress =
             geocodingResponse.results[0].formatted_address;
 
+          console.log('geocoding location search bar', location);
+
           if (!location || location.lat == null || location.lng == null) {
             console.error('Invalid location data received.');
             return;

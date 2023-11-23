@@ -6,6 +6,9 @@
       >
         @if (weatherData) {
           <div class="text-xl capitalize">{{ formattedAddress }}</div>
+          <div class="text-xs">
+            ({{ weatherData?.lat }}, {{ weatherData?.lon }})
+          </div>
           <div class="text-md">
             As of
             {{
@@ -31,8 +34,15 @@
             }
           </div>
           <div class="text-2xl">
-            <span>Day 222°</span> ·
-            <span>Night 222°</span>
+            <span
+              >Day
+              {{ weatherData?.daily[0]?.temp.day | number: "1.0-0" }}°</span
+            >
+            ·
+            <span
+              >Night
+              {{ weatherData?.daily[0]?.temp.night | number: "1.0-0" }}°</span
+            >
           </div>
         </div>
         <!-- icon -->

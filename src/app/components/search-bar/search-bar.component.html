@@ -1,5 +1,9 @@
 <div class="w-full">
-  <form (ngSubmit)="onSearch()" #searchForm="ngForm" class="flex w-full">
+  <form
+    (ngSubmit)="onSearch()"
+    #searchForm="ngForm"
+    class="relative flex w-full"
+  >
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Enter city</mat-label>
       <input
